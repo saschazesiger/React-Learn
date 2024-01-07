@@ -10,6 +10,8 @@
     cursor: pointer;
     transition: .3s ease;
     border: none;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .btnPrimary {
