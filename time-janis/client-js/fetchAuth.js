@@ -2,20 +2,22 @@
 
 
 
-export default async function fetchAuth (url, options = {}){
+export default async function fetchAuth (url = 'https://api-time.tinyweb.net/user/list', options = {}){
+    try{
     const jwt = localStorage.getItem('jwt');
-    const response = await fetch('https://api-time.tinyweb.net/user/list', {
+    const response = await fetch(url, {
         method: 'GET', // Methode GET
         headers: {
-            'Authorization': 'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ0aW1lc3RhbXAiOjE3MDQzNTA1NzMsImV4cCI6MTcwNDQzNjk3M30.51ODtDBYh1cMihF94Ux26VkPkvZL7-pXDHxTmQ29CeU',
+            'Authorization': `${jwt}`,
             'Content-Type': 'application/json'
         },
     });
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
 
     const data = await response.json();
     console.log(data);
     return data;
+} catch (error) {
+    console.log(error);
+    return {success: false, message: error};
+}
 };

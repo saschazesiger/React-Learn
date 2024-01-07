@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import fetchAuth from "@/client-js/fetchAuth";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -21,17 +21,9 @@ const LoginForm = () => {
     const data = await response.json();
     if (data.success && data.jwt) {
       localStorage.setItem("jwt", data.jwt);
+      props.getLogin({ state: "loggedin" });
     }
-    console.log(data);
   };
-
-  async function handleData(e) {
-    e.preventDefault();
-
-    const response = await fetchAuth("https://api-time.tinyweb.net/user/list");
-    const data = await response.json();
-    console.log(data);
-  }
 
   return (
     <>
@@ -55,11 +47,6 @@ const LoginForm = () => {
           />
         </div>
         <button type="submit">Login</button>
-      </form>
-
-      <form onSubmit={handleData}>
-
-        <button type="submit">Get</button>
       </form>
     </>
   );
